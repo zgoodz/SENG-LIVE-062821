@@ -23,6 +23,13 @@ function renderAside(storeObj){
 
 }
 
+function seperateReviews(singleReview, ul) {
+ let liReview = document.createElement('li')
+ liReview.textContent = `"${singleReview.content}"`
+ ul.append(liReview)
+}
+
+
 function renderCard(book){
   let li = document.createElement('li')
   let h4Title = document.createElement('h4')
@@ -30,14 +37,31 @@ function renderCard(book){
   let img = document.createElement('img')
   let pPrice = document.createElement('p')
   let pInventory = document.createElement('p')
+  let ulReview = document.createElement('ul')
+
+  // let formReview = document.createElement('form')
+  // let labelReview = document.createElement('label')
+  // let inputReview = document.createElement('input')
+  // let btnReview = document.createElement('button')
   let btn = document.createElement('button')
 
+// render reviews here
+
+
+ 
   li.className = 'card'
   img.src = book.image_url
   h4Title.textContent = book.title 
   h4Author.textContent = book.author
   pPrice.textContent = `Price: ${book.price}`
   pInventory.textContent = `Inventory: ${book.inventory}`
+  ulReview.textContent = `Reviews: `
+  book.reviews.forEach(singleReview => {
+    // let liReview = document.createElement('li')
+    //  liReview.textContent = `"${singleReview.content}"`
+     seperateReviews(singleReview, ulReview)
+  })
+  // liReview.textContent = `"${book.reviews.map(printReviews => printReviews.content)}"`
   btn.textContent = 'Add Inventory'
 
   btn.addEventListener('click', () => {
@@ -45,13 +69,17 @@ function renderCard(book){
     book.inventory+=1
     pInventory.textContent = `Inventory: ${book.inventory}`
   })
+
+
+
+  
   //HomeWork-------------------------------------------------
   //The books has an array of reviews
   //Add the review content to the card. 
   //Bonus
   //Add a form to the card that will render a new review to the card. 
 
-  li.append(img, h4Title, h4Author, pPrice, pInventory, btn)
+  li.append(img, h4Title, h4Author, pPrice, pInventory, ulReview, btn)
   document.querySelector('#book-list').prepend(li)
 
 }
@@ -83,7 +111,7 @@ function initialRender(){
   // the forEach above and below are doing the same thing
   // the one below has an unnecessary nested callback
   // the above is using renderCard as the callback
-  bookStore.inventory.forEach(book => renderCard(book))
+  // bookStore.inventory.forEach(book => renderCard(book))
 
 }
 initialRender()
